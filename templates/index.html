@@ -1,21 +1,71 @@
-<!doctype html>
-<html>
-<head>
-    <title>Raspberry Pi Dashboard</title>
-    <meta http-equiv="refresh" content="5">
-    <style>
-        body { font-family: monospace; background: #222; color: #0f0; }
-        h1 { color: #0ff; }
-        .stat { margin: 10px 0; }
-    </style>
-</head>
-<body>
-    <h1>{{ hostname }} Status</h1>
-    <div class="stat">IP: {{ ip }}</div>
-    <div class="stat">CPU Usage: {{ cpu }}%</div>
-    <div class="stat">Memory: {{ mem_used }}/{{ mem_total }} MB ({{ mem_percent }}%)</div>
-    <div class="stat">Disk: {{ disk_used }}/{{ disk_total }} GB ({{ disk_percent }}%)</div>
-    <div class="stat">Uptime: {{ uptime }} minutes</div>
-    <div class="stat">CPU Temp: {{ cpu_temp }}°C</div>
-</body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Pi Dashboard</title>
+    <meta http-equiv="refresh" content="1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='output.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="w-full sm:max-w-2xl mx-auto md:p-4">
+      <div class="mt-10 bg-gray-100 p-6 rounded-lg flex flex-col items-center">
+        <h1 class="font-bold text-2xl uppercase">{{ hostname }} Status</h1>
+
+        <div class="flex flex-col sm:flex-row gap-10 mt-10 text-center">
+          <div
+            class="flex-1 p-4 bg-gray-200 rounded-lg flex flex-col items-center gap-2"
+          >
+            <div class="font-black">IP</div>
+            <div>{{ ip }}</div>
+          </div>
+
+          <div
+            class="flex-1 p-4 bg-gray-200 rounded-lg flex flex-col items-center gap-2"
+          >
+            <div class="font-black">CPU Usage</div>
+            <div>{{ cpu }}%</div>
+          </div>
+          <div
+            class="flex-1 p-4 bg-gray-200 rounded-lg flex flex-col items-center gap-2"
+          >
+            <div class="font-black">Memory</div>
+            <div>{{ mem_used }}/{{ mem_total }} MB ({{ mem_percent }}%)</div>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-10 mt-10 text-center">
+          <div
+            class="flex-1 p-4 bg-gray-200 rounded-lg flex flex-col items-center gap-2"
+          >
+            <div class="font-black">Disk</div>
+            <div>{{ disk_used }}/{{ disk_total }} GB ({{ disk_percent }}%)</div>
+          </div>
+          <div
+            class="flex-1 p-4 bg-gray-200 rounded-lg flex flex-col items-center gap-2"
+          >
+            <div class="font-black">Uptime</div>
+            <div>{{ uptime }} min</div>
+          </div>
+
+          <div
+            class="flex-1 p-4 bg-gray-200 rounded-lg flex flex-col items-center gap-2"
+          >
+            <div class="font-black">CPU Temp</div>
+            {% if cpu_temp is not none %}
+            <div>{{ cpu_temp }}°C</div>
+            {% endif %} {% if cpu_temp is none %}
+            <div>N/A</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

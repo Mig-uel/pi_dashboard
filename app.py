@@ -14,7 +14,12 @@ def index():
     uptime_seconds = time.time() - psutil.boot_time()
     hostname = socket.gethostname()
     ip_address = socket.gethostbyname(hostname)
-    temp = psutil.sensors_temperatures()['cpu-thermal'][0].current
+
+    temps = psutil.sensors_temperatures()
+    cpu_temp = None
+
+    if 'cpu_thermal' in temps:
+        cpu_temp = temps['cpu_thermal'][0].current
 
 
     return render_template("index.html",
@@ -28,11 +33,9 @@ def index():
                            uptime=int(uptime_seconds // 60),
                            hostname=hostname,
                            ip=ip_address,
-                           temp=temp
+                           cpu_temp=cpu_temp
                            )
 
-# Logging to find RPi sensors
-print(psutil.sensors_temperatures())
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

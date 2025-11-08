@@ -31,5 +31,8 @@ def index():
                            temp=temp
                            )
 
+# Logging to find RPi sensors
+print(psutil.sensors_temperatures())
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
